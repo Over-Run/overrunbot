@@ -14,7 +14,14 @@ import org.slf4j.LoggerFactory;
 
 public class SimBotImpl {
     public static final Logger logger = LoggerFactory.getLogger("over-run-bot");
+    public static final ConfigInit configInit = new ConfigInit();
+
+    static {
+        configInit.init();
+    }
+
     public static void main(String[] args) {
+
         logger.info("test");
         final var builder = Applications
                 .buildSimbotApplication(Simple.INSTANCE);

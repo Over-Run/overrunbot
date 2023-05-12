@@ -29,9 +29,13 @@ project(":bot") {
     description = 'over-run-bot'
     dependencies {
         api 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
-        api 'love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2'
+        api('love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2') {
+            exclude group: 'net.mamoe'
+        }
+        api 'net.mamoe:mirai-core-jvm:2.15.0-M1'
         api 'love.forte.simbot.component:simbot-component-qq-guild-core:3.0.0.0-alpha.6'
         api 'love.forte.simbot.component:simbot-component-kook-core:3.0.0.0-alpha.5'
+        api 'com.google.code.gson:gson:2.10.1'
     }
     publishing {
         publications {
