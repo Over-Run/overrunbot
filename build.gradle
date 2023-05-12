@@ -1,7 +1,12 @@
+plugins {
+    id('org.jetbrains.kotlin.jvm').version('1.8.10').apply(false)
+}
 
 allprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+
 
     java.sourceCompatibility = java.targetCompatibility = JavaVersion.VERSION_17
 
@@ -18,10 +23,6 @@ allprojects {
     test.enabled = false
 }
 
-subprojects {
-
-}
-
 project(":bot") {
     setVersion("1.0.0.0")
     setGroup("io.github.over-run")
@@ -29,6 +30,8 @@ project(":bot") {
     dependencies {
         api 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
         api 'love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2'
+        api 'love.forte.simbot.component:simbot-component-qq-guild-core:3.0.0.0-alpha.6'
+        api 'love.forte.simbot.component:simbot-component-kook-core:3.0.0.0-alpha.5'
     }
     publishing {
         publications {
