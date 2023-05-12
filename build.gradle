@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+}
+
+setVersion("1.0.0.0")
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
+
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+}
+
+project(":bot") {
+    setVersion("1.0.0.0")
+    setGroup("io.github.over-run")
+    dependencies {
+        implementation 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
+        implementation 'love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2'
+
+    }
+}
