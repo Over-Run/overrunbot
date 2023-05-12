@@ -1,12 +1,10 @@
-plugins {
-    id 'java'
-}
-
-setVersion("1.0.0.0")
-
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
 
 allprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+
+    java.sourceCompatibility = java.targetCompatibility = JavaVersion.VERSION_17
+
     repositories {
         mavenCentral()
         mavenLocal()
@@ -17,21 +15,27 @@ allprojects {
             }
         }
     }
+    test.enabled = false
 }
 
 subprojects {
-    apply plugin: 'java'
+
 }
 
 project(":bot") {
     setVersion("1.0.0.0")
     setGroup("io.github.over-run")
+    description = 'over-run-bot'
     dependencies {
-        implementation 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
-        implementation('love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2') {
-            exclude group: 'net.mamoe'
+        api 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
+        api 'love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2'
+    }
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from(components.java)
+            }
         }
-        implementation('net.mamoe:mirai-core-jvm:2.15.0-M1')
-
     }
 }
+
