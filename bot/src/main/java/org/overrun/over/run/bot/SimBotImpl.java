@@ -15,19 +15,19 @@ import org.slf4j.LoggerFactory;
 public class SimBotImpl {
     public static final Logger logger = LoggerFactory.getLogger("over-run-bot");
     public static void main(String[] args) {
-
+        logger.info("test");
         final var builder = Applications
                 .buildSimbotApplication(Simple.INSTANCE);
         builder.config(config -> {
 
         });
         builder.build((build, config) -> {
-            build.install(MiraiComponent.Factory, (config1, perceivable) -> Unit.INSTANCE);
-            build.install(MiraiBotManager.Factory, (config1, perceivable) -> Unit.INSTANCE);
-            build.install(QQGuildComponent.Factory, (config1, perceivable) -> Unit.INSTANCE);
-            build.install(QQGuildBotManager.Factory, (config1, perceivable) -> Unit.INSTANCE);
-            build.install(KookComponent.Factory, (config1, perceivable) -> Unit.INSTANCE);
-            build.install(KookBotManager.Factory, (config1, perceivable) -> Unit.INSTANCE);
+            build.install(MiraiComponent.Factory, (__, ___) -> Unit.INSTANCE);
+            build.install(MiraiBotManager.Factory, (__, ___) -> Unit.INSTANCE);
+            build.install(QQGuildComponent.Factory, (__, ___) -> Unit.INSTANCE);
+            build.install(QQGuildBotManager.Factory, (__, ___) -> Unit.INSTANCE);
+            build.install(KookComponent.Factory, (__, ___) -> Unit.INSTANCE);
+            build.install(KookBotManager.Factory, (__, ___) -> Unit.INSTANCE);
 
         });
 
@@ -45,7 +45,7 @@ public class SimBotImpl {
 //                    event.replyBlocking("喵喵喵");
 //                }
 //        ));
-        logger.info("test");
+
         app.joinBlocking();
 
     }
