@@ -1,0 +1,20 @@
+{
+  "qq": [
+    {
+      "user": 1384922,
+      "password": "test_password"
+    }
+  ],
+  "guild": [
+    {
+      "user": 1384922,
+      "password": "test_password"
+    }
+  ],
+  "kook": [
+    {
+      "user": 1384922,
+      "password": "test_password"
+    }
+  ]
+}
