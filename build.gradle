@@ -1,11 +1,13 @@
 plugins {
     id('org.jetbrains.kotlin.jvm').version('1.8.10').apply(false)
+    id("com.github.johnrengelman.shadow").version('8.1.1').apply(false)
 }
 
 allprojects {
     apply plugin: 'java-library'
     apply plugin: 'maven-publish'
     apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
 
     java.sourceCompatibility = java.targetCompatibility = JavaVersion.VERSION_17
@@ -37,11 +39,24 @@ project(":bot") {
         api 'love.forte.simbot.component:simbot-component-kook-core:3.0.0.0-alpha.5'
         api 'com.google.code.gson:gson:2.10.1'
     }
+
+
+
+    jar {
+        manifest {
+            attributes 'Main-Class': "org.overrun.over.run.bot.SimBotImpl"
+        }
+
+    }
+
     publishing {
         publications {
             maven(MavenPublication) {
                 from(components.java)
             }
+        }
+        repositories {
+            mavenLocal()
         }
     }
 }
