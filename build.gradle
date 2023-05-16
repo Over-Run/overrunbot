@@ -4,7 +4,7 @@ plugins {
 }
 
 allprojects {
-    apply plugin: 'java-library'
+    apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'org.jetbrains.kotlin.jvm'
     apply plugin: 'com.github.johnrengelman.shadow'
@@ -30,23 +30,53 @@ project(":bot") {
     setGroup("io.github.over-run")
     description = 'over-run-bot'
     dependencies {
-        api 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
-        api('love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2') {
+        implementation 'love.forte.simbot:simbot-core:3.0.0-SNAPSHOT'
+        implementation('love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-RC.2') {
             exclude group: 'net.mamoe'
         }
-        api 'net.mamoe:mirai-core-jvm:2.15.0-M1'
-        api 'love.forte.simbot.component:simbot-component-qq-guild-core:3.0.0.0-alpha.6'
-        api 'love.forte.simbot.component:simbot-component-kook-core:3.0.0.0-alpha.5'
-        api 'com.google.code.gson:gson:2.10.1'
+        implementation 'net.mamoe:mirai-core-jvm:2.15.0-M1'
+        implementation 'love.forte.simbot.component:simbot-component-qq-guild-core:3.0.0.0-alpha.6'
+        implementation 'love.forte.simbot.component:simbot-component-kook-core:3.0.0.0-alpha.5'
+        implementation 'com.google.code.gson:gson:2.10.1'
+    }
+
+    def targetJavaVersion = 17
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+            options.release.set(targetJavaVersion)
+        }
+    }
+
+    java {
+        def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+        if (JavaVersion.current() < javaVersion) {
+            toolchain.languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+        }
+        archivesBaseName = getArchivesBaseName()
+        withSourcesJar()
+    }
+
+    jar {
+        manifestContentCharset 'utf-8'
+        metadataCharset 'utf-8'
+        from 'LICENSE'
+        manifest.attributes(
+                'Main-Class': "org.overrun.over.run.bot.SimBotImpl"
+        )
+    }
+
+    sourcesJar {
+        dependsOn classes
+        archiveClassifier.set 'sources'
+        from sourceSets.main.allSource, 'LICENSE'
+        exclude 'assets/*'
     }
 
 
 
-    jar {
-        manifest {
-            attributes 'Main-Class': "org.overrun.over.run.bot.SimBotImpl"
-        }
-
+    artifacts {
+        archives sourcesJar, shadowJar
     }
 
     publishing {
